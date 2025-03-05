@@ -1,13 +1,24 @@
 <!DOCTYPE html>
-<html lang="">
-  <head>
+<html lang="fr">
+<head>
     <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+    <title>Gestion des étudiants</title>
+    <script defer src="script.js"></script> <!-- Charge le script -->
+</head>
+<body>
+<div id="navbar-container"></div>
+<h1>Bienvenue sur l'application</h1>
+<div id="studentInfo" style="display: none;">
+    <h2>Informations de l'étudiant</h2>
+    <p><strong>Numéro d'étudiant:</strong> <span id="infoNumber"></span></p>
+    <p><strong>Nom:</strong> <span id="infoName"></span></p>
+    <p><strong>Email:</strong> <span id="infoEmail"></span></p>
+    <p><strong>Année de formation:</strong> <span id="infoYear"></span></p>
+    <p><strong>Options validées:</strong> <span id="infoOptions"></span></p>
+    <p><strong>Groupe TD:</strong> <span id="infoTD"></span></p>
+    <p><strong>Groupe TP:</strong> <span id="infoTP"></span></p>
+    <button id="logout">Déconnexion</button>
+</div>
+</body>
 </html>

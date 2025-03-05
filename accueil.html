@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    <script defer src="script.js"></script>
+    <style>
+        #studentInfo {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+<h1>Page d'accueil</h1>
+
+<form id="loginForm">
+    <label for="studentNumber">Numéro d'étudiant :</label>
+    <input type="text" id="studentNumber" required>
+
+    <label for="password">Mot de passe :</label>
+    <input type="password" id="password" required>
+
+    <button type="submit">Se connecter</button>
+</form>
+
+<!-- Nouveau bloc pour afficher les informations de l'étudiant -->
+<div id="studentInfo">
+    <h2>Informations de l'étudiant</h2>
+    <p>Numéro : <span id="infoNumber"></span></p>
+    <p>Nom : <span id="infoName"></span></p>
+    <p>Email : <span id="infoEmail"></span></p>
+    <p>Année : <span id="infoYear"></span></p>
+    <p>Options : <span id="infoOptions"></span></p>
+    <p>Groupe TD : <span id="infoTD"></span></p>
+    <p>Groupe TP : <span id="infoTP"></span></p>
+</div>
+
+<button id="goBack">Retour</button>
+</body>
+</html>
