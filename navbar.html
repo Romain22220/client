@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js avec Navbar</title>
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a href="#">Liste des étudiants</a></li>
+        <li><a href="inscription.html">Créer un étudiant</a></li>
+        <li style="float: right;"><a href="accueil.html">Connexion</a></li>
+    </ul>
+</nav>
+
+<style>
+    nav {
+        background-color: #333;
+        padding: 10px;
+    }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex; /* Utilisation de flexbox */
+        justify-content: flex-end; /* Aligne les éléments à droite */
+    }
+    li {
+        margin-left: 20px; /* Espacement entre les éléments */
+    }
+    a {
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+    }
+
+</style>
+</body>
+</html>

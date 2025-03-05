@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choix de l'Année de Formation</title>
+    <script defer src="script.js"></script>
+</head>
+<body>
+<h1>Choix de l'Année de Formation</h1>
+
+<form id="yearSelectionForm">
+    <div>
+        <label for="studyYear">Année de formation :</label>
+        <select id="studyYear" required>
+            <option value="">Sélectionnez votre année</option>
+            <option value="1ere">1ère année</option>
+            <option value="2eme">2ème année</option>
+            <option value="3eme">3ème année</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="options">Options :</label>
+        <select id="options" required>
+            <option value="">Sélectionnez une option</option>
+            <option value="Informatique">Informatique</option>
+            <option value="Mathématiques">Mathématiques</option>
+            <option value="Physique">Physique</option>
+        </select>
+    </div>
+
+    <button type="submit">Valider mon choix</button>
+</form>
+</body>
+</html>

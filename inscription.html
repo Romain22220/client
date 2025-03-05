@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription Étudiant</title>
+    <script defer src="script-inscription.js"></script>
+</head>
+<body>
+<h1>Inscription Étudiant</h1>
+
+<form id="registrationForm">
+    <div>
+        <label for="firstName">Prénom :</label>
+        <input type="text" id="firstName" required>
+    </div>
+
+    <div>
+        <label for="lastName">Nom :</label>
+        <input type="text" id="lastName" required>
+    </div>
+
+    <div>
+        <label for="email">Email :</label>
+        <input type="email" id="email" required>
+    </div>
+
+    <div>
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" required>
+    </div>
+
+    <div>
+        <label for="confirmPassword">Confirmer le mot de passe :</label>
+        <input type="password" id="confirmPassword" required>
+    </div>
+
+    <button type="submit">S'inscrire</button>
+</form>
+</body>
+</html>
