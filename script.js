@@ -6,13 +6,12 @@ fetch('navbar.html')
     .catch(error => console.error('Erreur lors du chargement de la navbar:', error));
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Configuration des événements selon la page
-    setupPageEvents();
+    configurerEvenementsPage();
 });
-function createMockStudent() {
-    // Données fictives de l'étudiant
-    const mockStudent = {
-        number: 12345, // Utilise la fonction existante de génération de numéro
+
+function creerEtudiantFictif() {
+    const etudiantFictif = {
+        number: 12345,
         firstName: "Jean",
         lastName: "Dupont",
         email: "jean.dupont@example.com",
@@ -23,64 +22,56 @@ function createMockStudent() {
         isCompleted: true
     };
 
-    // Récupérer la liste des étudiants existants
-    const registeredStudents = JSON.parse(localStorage.getItem('registeredStudents') || '[]');
+    const etudiantsEnregistres = JSON.parse(localStorage.getItem('registeredStudents') || '[]');
 
-    // Vérifier si un étudiant fictif existe déjà
-    const existingMockStudent = registeredStudents.find(
-        student => student.email === mockStudent.email
+    const etudiantFictifExistant = etudiantsEnregistres.find(
+        student => student.email === etudiantFictif.email
     );
 
-    if (!existingMockStudent) {
-        // Ajouter l'étudiant fictif à la liste
-        registeredStudents.push(mockStudent);
-        localStorage.setItem('registeredStudents', JSON.stringify(registeredStudents));
+    if (!etudiantFictifExistant) {
+        etudiantsEnregistres.push(etudiantFictif);
+        localStorage.setItem('registeredStudents', JSON.stringify(etudiantsEnregistres));
 
-        alert(`Compte fictif créé !\nNuméro étudiant : ${mockStudent.number}\nMot de passe : ${mockStudent.password}`);
+        alert(`Compte fictif créé !\nNuméro étudiant : ${etudiantFictif.number}\nMot de passe : ${etudiantFictif.password}`);
     } else {
         alert("Un compte fictif existe déjà.");
     }
 }
-function setupPageEvents() {
-    // Gestion du formulaire de connexion sur accueil.html
-    const loginForm = document.getElementById("loginForm");
-    if (loginForm) {
-        loginForm.addEventListener("submit", handleLogin);
+
+function configurerEvenementsPage() {
+    const formulaireConnexion = document.getElementById("loginForm");
+    if (formulaireConnexion) {
+        formulaireConnexion.addEventListener("submit", gererConnexion);
     }
 
-    // Gestion du formulaire d'inscription
-    const registrationForm = document.getElementById("registrationForm");
-    if (registrationForm) {
-        registrationForm.addEventListener("submit", handleRegistration);
+    const formulaireInscription = document.getElementById("registrationForm");
+    if (formulaireInscription) {
+        formulaireInscription.addEventListener("submit", gererInscription);
     }
 
-    // Gestion du formulaire de choix d'année
-    const yearSelectionForm = document.getElementById("yearSelectionForm");
-    if (yearSelectionForm) {
-        yearSelectionForm.addEventListener("submit", handleYearSelection);
+    const formulaireChoixAnnee = document.getElementById("yearSelectionForm");
+    if (formulaireChoixAnnee) {
+        formulaireChoixAnnee.addEventListener("submit", gererChoixAnnee);
     }
 
-    // Gestion des boutons de navigation
-    const goBackButton = document.getElementById("goBack");
-    if (goBackButton) {
-        goBackButton.addEventListener("click", function () {
+    const boutonRetour = document.getElementById("goBack");
+    if (boutonRetour) {
+        boutonRetour.addEventListener("click", function () {
             window.location.href = "index.html";
         });
     }
 }
 
-function handleLogin(event) {
+function gererConnexion(event) {
     event.preventDefault();
 
-    const studentNumber = document.getElementById("studentNumber").value;
-    const password = document.getElementById("password").value;
+    const numeroEtudiant = document.getElementById("studentNumber").value;
+    const motDePasse = document.getElementById("password").value;
 
-    // Récupérer les étudiants enregistrés
-    const registeredStudents = JSON.parse(localStorage.getItem('registeredStudents') || '[]');
+    const etudiantsEnregistres = JSON.parse(localStorage.getItem('registeredStudents') || '[]');
 
-    // Ajouter un compte fictif par défaut s'il n'existe pas
-    const mockStudent = {
-        number: "24001", // Numéro étudiant fixe pour le compte fictif
+    const etudiantFictif = {
+        number: "24001",
         firstName: "Jean",
         lastName: "Dupont",
         email: "jean.dupont@example.com",
@@ -91,146 +82,122 @@ function handleLogin(event) {
         isCompleted: true
     };
 
-    // Vérifier si le compte fictif existe déjà
-    const mockStudentExists = registeredStudents.some(s => s.number === mockStudent.number);
+    const etudiantFictifExistant = etudiantsEnregistres.some(s => s.number === etudiantFictif.number);
 
-    if (!mockStudentExists) {
-        registeredStudents.push(mockStudent);
-        localStorage.setItem('registeredStudents', JSON.stringify(registeredStudents));
+    if (!etudiantFictifExistant) {
+        etudiantsEnregistres.push(etudiantFictif);
+        localStorage.setItem('registeredStudents', JSON.stringify(etudiantsEnregistres));
     }
 
-    // Trouver l'étudiant correspondant
-    const student = registeredStudents.find(
-        s => s.number === studentNumber && s.password === password
+    const etudiant = etudiantsEnregistres.find(
+        s => s.number === numeroEtudiant && s.password === motDePasse
     );
 
-    if (student) {
-        // Stocker les données de connexion
-        localStorage.setItem("currentStudent", JSON.stringify(student));
-
-        // Rediriger vers une page de tableau de bord ou d'accueil personnalisé
+    if (etudiant) {
+        localStorage.setItem("currentStudent", JSON.stringify(etudiant));
         window.location.href = 'dashboard.html';
     } else {
         alert("Numéro d'étudiant ou mot de passe incorrect !");
     }
 }
-// Fonction d'inscription
-function handleRegistration(event) {
+
+function gererInscription(event) {
     event.preventDefault();
 
-    // Récupérer les informations du formulaire
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
+    const prenom = document.getElementById('firstName').value;
+    const nom = document.getElementById('lastName').value;
     const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
+    const motDePasse = document.getElementById('password').value;
+    const confirmerMotDePasse = document.getElementById('confirmPassword').value;
 
-    // Validation
-    if (password !== confirmPassword) {
+    if (motDePasse !== confirmerMotDePasse) {
         alert("Les mots de passe ne correspondent pas !");
         return;
     }
 
-    // Générer un numéro étudiant
-    const studentNumber = generateStudentNumber();
+    const numeroEtudiant = genererNumeroEtudiant();
 
-    // Créer l'objet étudiant
-    const newStudent = {
-        number: studentNumber,
-        firstName: firstName,
-        lastName: lastName,
+    const nouvelEtudiant = {
+        number: numeroEtudiant,
+        firstName: prenom,
+        lastName: nom,
         email: email,
-        password: password,
+        password: motDePasse,
         registrationStep: 1,
         isCompleted: false
     };
 
-    // Récupérer et mettre à jour la liste des étudiants
-    const registeredStudents = JSON.parse(localStorage.getItem('registeredStudents') || '[]');
-    registeredStudents.push(newStudent);
-    localStorage.setItem('registeredStudents', JSON.stringify(registeredStudents));
+    const etudiantsEnregistres = JSON.parse(localStorage.getItem('registeredStudents') || '[]');
+    etudiantsEnregistres.push(nouvelEtudiant);
+    localStorage.setItem('registeredStudents', JSON.stringify(etudiantsEnregistres));
 
-    // Stocker temporairement les données du nouvel étudiant
-    localStorage.setItem('newStudentData', JSON.stringify(newStudent));
+    localStorage.setItem('newStudentData', JSON.stringify(nouvelEtudiant));
 
-    // Message de bienvenue
-    alert(`Bienvenue ${firstName} ! Votre numéro étudiant est : ${studentNumber}\n\nVous allez maintenant choisir votre année de formation.`);
-
-    // Rediriger vers la page de choix d'année
+    alert(`Bienvenue ${prenom} ! Votre numéro étudiant est : ${numeroEtudiant}\n\nVous allez maintenant choisir votre année de formation.`);
     window.location.href = 'choix-annee.html';
 }
 
-// Fonction de sélection d'année
-function handleYearSelection(event) {
+function gererChoixAnnee(event) {
     event.preventDefault();
 
-    // Récupérer les données temporaires
-    const studentData = JSON.parse(localStorage.getItem('newStudentData'));
-    if (!studentData) {
+    const donneesEtudiant = JSON.parse(localStorage.getItem('newStudentData'));
+    if (!donneesEtudiant) {
         alert("Erreur : Aucune donnée d'inscription trouvée.");
         return;
     }
 
-    // Récupérer l'année de formation
-    const studyYear = document.getElementById('studyYear').value;
+    const anneeEtude = document.getElementById('studyYear').value;
     const options = document.getElementById('options').value;
 
-    // Mettre à jour l'étudiant
-    studentData.year = studyYear;
-    studentData.options = options;
-    studentData.registrationStep = 2;
-    studentData.isCompleted = true;
+    donneesEtudiant.year = anneeEtude;
+    donneesEtudiant.options = options;
+    donneesEtudiant.registrationStep = 2;
+    donneesEtudiant.isCompleted = true;
 
-    // Mettre à jour dans la liste des étudiants
-    const registeredStudents = JSON.parse(localStorage.getItem('registeredStudents') || '[]');
-    const studentIndex = registeredStudents.findIndex(s => s.number === studentData.number);
+    const etudiantsEnregistres = JSON.parse(localStorage.getItem('registeredStudents') || '[]');
+    const indexEtudiant = etudiantsEnregistres.findIndex(s => s.number === donneesEtudiant.number);
 
-    if (studentIndex !== -1) {
-        registeredStudents[studentIndex] = studentData;
-        localStorage.setItem('registeredStudents', JSON.stringify(registeredStudents));
+    if (indexEtudiant !== -1) {
+        etudiantsEnregistres[indexEtudiant] = donneesEtudiant;
+        localStorage.setItem('registeredStudents', JSON.stringify(etudiantsEnregistres));
     }
 
-    // Supprimer les données temporaires
     localStorage.removeItem('newStudentData');
 
     alert(`Votre profil a été mis à jour. Vous pouvez maintenant vous connecter.`);
     window.location.href = 'accueil.html';
 }
 
-// Générer un numéro étudiant unique
-function generateStudentNumber() {
-    const currentYear = new Date().getFullYear().toString().slice(-2);
-    const randomPart = Math.floor(10000 + Math.random() * 90000);
-    return currentYear + randomPart.toString();
+function genererNumeroEtudiant() {
+    const anneeCourante = new Date().getFullYear().toString().slice(-2);
+    const partieAleatoire = Math.floor(10000 + Math.random() * 90000);
+    return anneeCourante + partieAleatoire.toString();
 }
 
-// Afficher les informations de l'étudiant connecté
+function afficherInfosEtudiant() {
+    const etudiantActuel = JSON.parse(localStorage.getItem("currentStudent"));
+    if (etudiantActuel) {
+        const conteneurInfosEtudiant = document.getElementById("studentInfo");
 
-function displayStudentInfo() {
-    const currentStudent = JSON.parse(localStorage.getItem("currentStudent"));
-    if (currentStudent) {
-        const studentInfoContainer = document.getElementById("studentInfo");
+        if (conteneurInfosEtudiant) {
+            conteneurInfosEtudiant.style.display = "block";
 
-        if (studentInfoContainer) {
-            studentInfoContainer.style.display = "block";
-
-            document.getElementById("infoNumber").textContent = currentStudent.number || "Non disponible";
-            document.getElementById("infoName").textContent = `${currentStudent.firstName} ${currentStudent.lastName}`;
-            document.getElementById("infoEmail").textContent = currentStudent.email;
-            document.getElementById("infoYear").textContent = currentStudent.year || "Non renseigné";
-            document.getElementById("infoOptions").textContent = currentStudent.options || "Non renseigné";
+            document.getElementById("infoNumber").textContent = etudiantActuel.number || "Non disponible";
+            document.getElementById("infoName").textContent = `${etudiantActuel.firstName} ${etudiantActuel.lastName}`;
+            document.getElementById("infoEmail").textContent = etudiantActuel.email;
+            document.getElementById("infoYear").textContent = etudiantActuel.year || "Non renseigné";
+            document.getElementById("infoOptions").textContent = etudiantActuel.options || "Non renseigné";
         }
     }
 }
 
-// Vérifier si l'utilisateur est déjà connecté au chargement de la page
 document.addEventListener("DOMContentLoaded", function() {
-    const currentStudent = localStorage.getItem("currentStudent");
-    if (currentStudent) {
-        const loginForm = document.getElementById("loginForm");
-        if (loginForm) {
-            loginForm.style.display = "none";
+    const etudiantActuel = localStorage.getItem("currentStudent");
+    if (etudiantActuel) {
+        const formulaireConnexion = document.getElementById("loginForm");
+        if (formulaireConnexion) {
+            formulaireConnexion.style.display = "none";
         }
-        displayStudentInfo();
+        afficherInfosEtudiant();
     }
 });
