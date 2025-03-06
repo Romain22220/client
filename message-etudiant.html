@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,6 +39,7 @@
 </table>
 
 <script>
+    // Chargement de la navbar
     fetch('navbar-etudiant.html')
         .then(response => response.text())
         .then(data => {
@@ -48,7 +47,35 @@
         })
         .catch(error => console.error('Erreur lors du chargement de la navbar:', error));
 
-    const apiUrl = "http://localhost:8090/messages";
+    const apiUrl = "http://localhost:8090/messages"; // URL API correcte
+
+    // Messages statiques en fallback
+    const messagesStatic = [
+        {
+            id: 1,
+            expediteur: "Olivier McCourt",
+            texte: "Bonjour, je vous envoie un message pour vous demander des nouvelles",
+            idStudent: 1,
+            date: "2023-04-06",
+            status: "lu"
+        },
+        {
+            id: 2,
+            expediteur: "Katia Martin",
+            texte: "Bonjour, veuillez me contacter au plus vite et me rendre votre projet",
+            idStudent: 2,
+            date: "2022-12-12",
+            status: "non lu"
+        },
+        {
+            id: 3,
+            expediteur: "Olivier McCourt",
+            texte: "Pas de réponse, je vous relance",
+            idStudent: 1,
+            date: "2021-10-10",
+            status: "lu"
+        }
+    ];
 
     async function fetchMessages() {
         try {
@@ -60,6 +87,8 @@
             displayMessages(messages);
         } catch (error) {
             console.error("Erreur API:", error);
+            console.log("Affichage des messages statiques");
+            displayMessages(messagesStatic); // Fallback si l'API ne répond pas
         }
     }
 
@@ -67,17 +96,18 @@
         const tableBody = document.getElementById("messagesTableBody");
         tableBody.innerHTML = "";
         messages.forEach(message => {
-            const row = `<tr class="${message.lu ? '' : 'unread'}">
+            const nonLu = message.status.toLowerCase() === "non lu"; // Vérification statut
+            const statusText = nonLu ? '❌ Non lu' : '✔️ Lu'; // Ajout de l'emoji
+            const row = `<tr class="${nonLu ? 'unread' : ''}">
                     <td>${message.expediteur}</td>
                     <td>${message.texte}</td>
                     <td>${message.date}</td>
-                    <td>${message.lu ? 'Lu' : 'Non lu'}</td>
+                    <td>${statusText}</td>
                 </tr>`;
-            tableBody.innerHTML += row;
+            tableBody.insertAdjacentHTML("beforeend", row);
         });
     }
 
     document.addEventListener("DOMContentLoaded", fetchMessages);
 </script>
 </body>
-</html>
