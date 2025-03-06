@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer une année de formation</title>
+    <style>
+        /* Styles pour le formulaire */
+        form {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+<h1>Créer une année de formation</h1>
+<form id="createFormationForm">
+    <label for="formationName">Nom de l'année de formation:</label>
+    <input type="text" id="formationName" placeholder="Nom de l'année de formation" required>
+
+    <label for="managerEmail">Email du responsable:</label>
+    <input type="email" id="managerEmail" placeholder="Email du responsable" required>
+
+    <label for="managerName">Nom du responsable:</label>
+    <input type="text" id="managerName" placeholder="Nom du responsable" required>
+
+    <label for="managerPrenom">Prénom du responsable:</label>
+    <input type="text" id="managerPrenom" placeholder="Prénom du responsable" required>
+
+    <button type="submit">Créer l'année de formation</button>
+</form>
+
+<script>
+    document.getElementById("createFormationForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        alert("L'année de formation a été créée avec succès !");
+    });
+</script>
+</body>
+</html>

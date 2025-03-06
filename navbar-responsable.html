@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Responsable</title>
+    <style>
+        /* Style global de la navbar */
+        nav {
+            background-color: #3498db;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #2980b9;
+        }
+
+        nav a.active {
+            background-color: #2980b9;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav li {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <!-- Lien vers la page de création de l'année de formation -->
+        <li><a href="creation-formation.html" class="active">Créer une année de formation</a></li>
+
+
+        <li><a href="listerManager.html">Responsables</a></li>
+
+
+        <!-- Lien vers la gestion des UE -->
+        <li><a href="gestion-ue.html">Gérer les UE</a></li>
+
+        <!-- Lien vers la page d'affectation des étudiants aux groupes -->
+        <li><a href="affectation-etudiants.html">Affecter étudiants</a></li>
+
+        <!-- Lien pour valider/refuser les étudiants        <li><a href="validation-etudiants.html">Valider les étudiants</a></li>
+ -->
+
+        <!-- Lien pour déplacer les étudiants dans les groupes -->
+        <li><a href="deplacement-etudiants.html">Déplacer étudiants</a></li>
+
+        <!-- Lien pour afficher les étudiants dans un groupe -->
+        <li><a href="afficher-groupes.html">Afficher les groupes</a></li>
+
+        <li><a href="index.html">Déconnexion</a></li>
+    </ul>
+</nav>
+
+<script>
+    // JavaScript pour ajouter une classe "active" à l'élément de la navbar en fonction de la page actuelle
+    document.querySelectorAll('nav a').forEach(link => {
+        if (window.location.href.includes(link.getAttribute('href'))) {
+            link.classList.add('active');
+        }
+    });
+</script>
+
+</body>
+</html>
