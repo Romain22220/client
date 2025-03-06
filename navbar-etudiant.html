@@ -62,20 +62,35 @@
         }
     </style>
 </head>
+<body>
+<h1>Tableau de Bord étudiant </h1>
 
-
-        <body>
 <nav>
     <ul>
-        <li><a href="listeetudiant.html">Liste des étudiants</a></li>
-        <li><a href="inscription.html">Créer un étudiant</a></li>
-        <li style="float: right;"><a href="accueil.html">Connexion</a></li>
+        <li><a href="etudiant.html">Information personelle</a></li>
+        <li><a href="message-etudiant.html">Messagerie</a></li>
+        <li style="float: right;"><a href="index.html">Déconnexion</a></li>
     </ul>
 </nav>
-<div class="container">
-    <h1>Bienvenue sur notre page Vue.js</h1>
-    <p>Utilisez la barre de navigation pour naviguer entre les pages.</p>
-</div>
 
+
+<script>
+    // Ajouter un gestionnaire de déconnexion
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+        localStorage.removeItem('currentStudent');
+        window.location.href = 'accueil.html';
+    });
+
+    // Afficher automatiquement les informations de l'étudiant
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentStudent = localStorage.getItem('currentStudent');
+        if (!currentStudent) {
+            // Si pas de connexion, rediriger vers la page de connexion
+            window.location.href = 'accueil.html';
+        } else {
+            displayStudentInfo();
+        }
+    });
+</script>
 </body>
 </html>

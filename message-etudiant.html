@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages Reçus</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .unread {
+            font-weight: bold;
+            background-color: #ffefc1;
+        }
+    </style>
+</head>
+<body>
+<div id="navbar-container"></div>
+<h1>Messages Reçus</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Expéditeur</th>
+        <th>Message</th>
+        <th>Date</th>
+        <th>Statut</th>
+    </tr>
+    </thead>
+    <tbody id="messagesTableBody">
+    <!-- Les données seront insérées ici -->
+    </tbody>
+</table>
+
+<script>
+    fetch('navbar-etudiant.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar-container').innerHTML = data;
+        })
+        .catch(error => console.error('Erreur lors du chargement de la navbar:', error));
+
+    const apiUrl = "http://localhost:8090/messages";
+
+    async function fetchMessages() {
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                throw new Error("Erreur lors de la récupération des messages");
+            }
+            const messages = await response.json();
+            displayMessages(messages);
+        } catch (error) {
+            console.error("Erreur API:", error);
+        }
+    }
+
+    function displayMessages(messages) {
+        const tableBody = document.getElementById("messagesTableBody");
+        tableBody.innerHTML = "";
+        messages.forEach(message => {
+            const row = `<tr class="${message.lu ? '' : 'unread'}">
+                    <td>${message.expediteur}</td>
+                    <td>${message.texte}</td>
+                    <td>${message.date}</td>
+                    <td>${message.lu ? 'Lu' : 'Non lu'}</td>
+                </tr>`;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchMessages);
+</script>
+</body>
+</html>

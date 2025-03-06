@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Étudiant</title>
+    <script defer src="etudiant.js"></script>
+</head>
+<body>
+<div id="navbar-container"></div>
+<h1>Espace Étudiant</h1>
+<div id="info-etudiant">
+    <p><strong>Numéro Étudiant:</strong> <span id="infoNumber">...</span></p>
+    <p><strong>Nom:</strong> <span id="infoName">...</span></p>
+    <p><strong>Prenom:</strong> <span id="infoPrenom">...</span></p>
+    <p><strong>Date naissance:</strong> <span id="infoDate">...</span></p>
+
+    <p><strong>Email:</strong> <span id="infoEmail">...</span></p>
+    <p><strong>Année de Formation:</strong> <span id="infoYear">...</span></p>
+    <p><strong>Options Validées:</strong> <span id="infoOptions">...</span></p>
+    <p><strong>Groupe TD:</strong> <span id="infoTD">...</span></p>
+    <p><strong>Groupe TP:</strong> <span id="infoTP">...</span></p>
+</div>
+
+<h2>Choisir une nouvelle année de formation</h2>
+<form id="formChoixAnnee">
+    <label for="annee">Nouvelle année:</label>
+    <select id="annee" required>
+        <option value="">-- Sélectionnez une année --</option>
+        <option value="L1">L1</option>
+        <option value="L2">L2</option>
+        <option value="L3">L3</option>
+        <option value="M1">M1</option>
+        <option value="M2">M2</option>
+    </select>
+    <button type="submit">Valider</button>
+</form>
+</body>
+</html>

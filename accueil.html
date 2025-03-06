@@ -6,40 +6,133 @@
     <title>Accueil</title>
     <script defer src="script.js"></script>
     <style>
+        /* Style global du body */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        /* Barre orange en haut */
+        #topBar {
+            background-color: #f39c12;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        /* Conteneur du formulaire de connexion */
+        #loginForm {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            margin-top: auto; /* Permet de pousser le formulaire en bas */
+            margin-bottom: 30px; /* Pour un petit espacement */
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+        /* Bloc des informations de l'étudiant */
         #studentInfo {
             display: none;
+            background-color: #fff;
+            padding: 20px;
             margin-top: 20px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: left;
+        }
+
+        #studentInfo h2 {
+            text-align: center;
+            color: #3498db;
+        }
+
+        #studentInfo p {
+            margin: 10px 0;
+        }
+
+        #studentInfo span {
+            font-weight: bold;
+        }
+        /* Bouton Retour */
+        #goBack {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        #goBack:hover {
+            background-color: #c0392b;
         }
     </style>
 </head>
+
 <body>
-<h1>Page d'accueil</h1>
+<div id="topBar">
+    Page d'accueil
+</div>
+<div id="loginForm">
 
 <form id="loginForm">
     <label for="studentNumber">Numéro d'étudiant :</label>
     <input type="text" id="studentNumber" required>
 
-    <label for="password">Mot de passe :</label>
-    <input type="password" id="password" required>
 
     <button type="submit">Se connecter</button>
 </form>
-
-<!-- Nouveau bloc pour afficher les informations de l'étudiant -->
-<div id="studentInfo">
-    <h2>Informations de l'étudiant</h2>
-    <p>Numéro : <span id="infoNumber"></span></p>
-    <p>Nom : <span id="infoName"></span></p>
-    <p>Email : <span id="infoEmail"></span></p>
-    <p>Année : <span id="infoYear"></span></p>
-    <p>Options : <span id="infoOptions"></span></p>
-    <p>Groupe TD : <span id="infoTD"></span></p>
-    <p>Groupe TP : <span id="infoTP"></span></p>
 </div>
 
 <button id="goBack">Retour</button>
 </body>
+<script>
+    document.getElementById("goBack").addEventListener("click", function() {
+        window.location.href = "index.html";  // Rediriger vers index.html
+    });
+</script>
 </html>

@@ -4,9 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription Étudiant</title>
-    <script defer src="script-inscription.js"></script>
+    <script defer src="script.js"></script>
+    <style>
+        /* Style global du body */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        /* En-tête */
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* Conteneur du formulaire d'inscription */
+        #registrationForm {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        /* Style des champs du formulaire */
+        div {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        /* Bouton de soumission */
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Gestion des erreurs (si applicable) */
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+
+
+        /* Bouton Retour */
+        #goBack {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+            width: 100%;
+        }
+    </style>
 </head>
-<body>
+
+        <body>
 <h1>Inscription Étudiant</h1>
 
 <form id="registrationForm">
@@ -19,23 +113,36 @@
         <label for="lastName">Nom :</label>
         <input type="text" id="lastName" required>
     </div>
-
+    <div>
+        <label for="date_naisance">Date naissance :</label>
+        <input type="date" id="date_naissance" required>
+    </div>
+    <div>
+        <label for="numeo">Numero :</label>
+        <input type="int" id="numero" required>
+    </div>
     <div>
         <label for="email">Email :</label>
         <input type="email" id="email" required>
     </div>
 
-    <div>
-        <label for="password">Mot de passe :</label>
-        <input type="password" id="password" required>
-    </div>
-
-    <div>
-        <label for="confirmPassword">Confirmer le mot de passe :</label>
-        <input type="password" id="confirmPassword" required>
-    </div>
-
     <button type="submit">S'inscrire</button>
+    <br>
+    <br>
+    <br>
+
+
+    <button id="goBack">Retour</button>
+
+
 </form>
+
+<script>
+    // Gestion du retour en arrière
+    document.getElementById("goBack").addEventListener("click", function () {
+        window.location.href = "index.html";
+    });
+</script>
+
 </body>
 </html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Étudiants</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<div id="navbar-container"></div>
+<h1>Liste des Étudiants</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Date de Naissance</th>
+        <th>Numéro</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody id="studentsTableBody">
+    <!-- Les données seront insérées ici -->
+    </tbody>
+</table>
+
+<script>
+    fetch('navbar-etudiant.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar-container').innerHTML = data;
+        })
+        .catch(error => console.error('Erreur lors du chargement de la navbar:', error));
+
+    const apiUrl = "http://localhost:8090/students";
+
+    async function fetchStudents() {
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                throw new Error("Erreur lors de la récupération des étudiants");
+            }
+            const students = await response.json();
+            displayStudents(students);
+        } catch (error) {
+            console.error("Erreur API:", error);
+        }
+    }
+
+    function displayStudents(students) {
+        const tableBody = document.getElementById("studentsTableBody");
+        tableBody.innerHTML = "";
+        students.forEach(student => {
+            const row = `<tr>
+                    <td>${student.id}</td>
+                    <td>${student.nom}</td>
+                    <td>${student.prenom}</td>
+                    <td>${student.date_naissance}</td>
+                    <td>${student.numero}</td>
+                    <td>${student.adresse_mail}</td>
+                </tr>`;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchStudents);
+</script>
+</body>
+</html>
