@@ -6,231 +6,140 @@ fetch('navbar.html')
     .catch(error => console.error('Erreur lors du chargement de la navbar:', error));
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Configuration des événements selon la page
-    setupPageEvents();
+    configurerEvenementsPage();
 });
-function createMockStudent() {
-    // Données fictives de l'étudiant
-    const mockStudent = {
-        number: 12345, // Utilise la fonction existante de génération de numéro
-        firstName: "Jean",
-        lastName: "Dupont",
-        email: "jean.dupont@example.com",
-        password: "password123",
-        year: "2eme",
-        options: "Informatique",
-        registrationStep: 2,
-        isCompleted: true
-    };
 
-    // Récupérer la liste des étudiants existants
-    const registeredStudents = JSON.parse(localStorage.getItem('registeredStudents') || '[]');
+const apiUrl = "http://localhost:8090/students";
 
-    // Vérifier si un étudiant fictif existe déjà
-    const existingMockStudent = registeredStudents.find(
-        student => student.email === mockStudent.email
-    );
-
-    if (!existingMockStudent) {
-        // Ajouter l'étudiant fictif à la liste
-        registeredStudents.push(mockStudent);
-        localStorage.setItem('registeredStudents', JSON.stringify(registeredStudents));
-
-        alert(`Compte fictif créé !\nNuméro étudiant : ${mockStudent.number}\nMot de passe : ${mockStudent.password}`);
-    } else {
-        alert("Un compte fictif existe déjà.");
-    }
-}
-function setupPageEvents() {
-    // Gestion du formulaire de connexion sur accueil.html
-    const loginForm = document.getElementById("loginForm");
-    if (loginForm) {
-        loginForm.addEventListener("submit", handleLogin);
-    }
-
-    // Gestion du formulaire d'inscription
-    const registrationForm = document.getElementById("registrationForm");
-    if (registrationForm) {
-        registrationForm.addEventListener("submit", handleRegistration);
-    }
-
-    // Gestion du formulaire de choix d'année
-    const yearSelectionForm = document.getElementById("yearSelectionForm");
-    if (yearSelectionForm) {
-        yearSelectionForm.addEventListener("submit", handleYearSelection);
-    }
-
-    // Gestion des boutons de navigation
-    const goBackButton = document.getElementById("goBack");
-    if (goBackButton) {
-        goBackButton.addEventListener("click", function () {
-            window.location.href = "index.html";
-        });
+// Fonction pour récupérer le dernier ID et l'incrémenter
+async function getNextId() {
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error("Erreur lors de la récupération des étudiants");
+        }
+        const students = await response.json();
+        return students.length > 0 ? Math.max(...students.map(s => s.id)) + 1 : 1; // Si aucun étudiant, commencer à 1
+    } catch (error) {
+        console.error("Erreur API:", error);
+        return null; // En cas d'erreur, renvoyer null
     }
 }
 
-function handleLogin(event) {
-    event.preventDefault();
-
-    const studentNumber = document.getElementById("studentNumber").value;
-    const password = document.getElementById("password").value;
-
-    // Récupérer les étudiants enregistrés
-    const registeredStudents = JSON.parse(localStorage.getItem('registeredStudents') || '[]');
-
-    // Ajouter un compte fictif par défaut s'il n'existe pas
-    const mockStudent = {
-        number: "24001", // Numéro étudiant fixe pour le compte fictif
-        firstName: "Jean",
-        lastName: "Dupont",
-        email: "jean.dupont@example.com",
-        password: "password123",
-        year: "2eme",
-        options: "Informatique",
-        registrationStep: 2,
-        isCompleted: true
-    };
-
-    // Vérifier si le compte fictif existe déjà
-    const mockStudentExists = registeredStudents.some(s => s.number === mockStudent.number);
-
-    if (!mockStudentExists) {
-        registeredStudents.push(mockStudent);
-        localStorage.setItem('registeredStudents', JSON.stringify(registeredStudents));
-    }
-
-    // Trouver l'étudiant correspondant
-    const student = registeredStudents.find(
-        s => s.number === studentNumber && s.password === password
-    );
-
-    if (student) {
-        // Stocker les données de connexion
-        localStorage.setItem("currentStudent", JSON.stringify(student));
-
-        // Rediriger vers une page de tableau de bord ou d'accueil personnalisé
-        window.location.href = 'dashboard.html';
-    } else {
-        alert("Numéro d'étudiant ou mot de passe incorrect !");
-    }
-}
 // Fonction d'inscription
-function handleRegistration(event) {
-    event.preventDefault();
+async function registerStudent(event) {
+    event.preventDefault(); // Empêcher le rechargement de la page
 
-    // Récupérer les informations du formulaire
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
+    // Récupération des valeurs du formulaire
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+    const date_naissance = document.getElementById("date_naissance").value;
+    const numero = document.getElementById("numero").value;
+    const email = document.getElementById("email").value;
 
-    // Validation
-    if (password !== confirmPassword) {
-        alert("Les mots de passe ne correspondent pas !");
+    // Récupérer le prochain ID
+    const newId = await getNextId();
+    if (newId === null) {
+        alert("Erreur lors de l'inscription. Veuillez réessayer.");
         return;
     }
 
-    // Générer un numéro étudiant
-    const studentNumber = generateStudentNumber();
-
-    // Créer l'objet étudiant
-    const newStudent = {
-        number: studentNumber,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-        registrationStep: 1,
-        isCompleted: false
+    // Création de l'objet étudiant à envoyer
+    const studentData = {
+        id: newId,
+        prenom: firstName,
+        nom: lastName,
+        date_naissance: date_naissance,
+        numero: numero,
+        adresse_mail: email
     };
 
-    // Récupérer et mettre à jour la liste des étudiants
-    const registeredStudents = JSON.parse(localStorage.getItem('registeredStudents') || '[]');
-    registeredStudents.push(newStudent);
-    localStorage.setItem('registeredStudents', JSON.stringify(registeredStudents));
+    try {
+        // Envoyer les données à l'API avec une requête POST
+        const postResponse = await fetch(apiUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(studentData)
+        });
 
-    // Stocker temporairement les données du nouvel étudiant
-    localStorage.setItem('newStudentData', JSON.stringify(newStudent));
+        if (!postResponse.ok) {
+            throw new Error("Erreur lors de l'inscription");
+        }
 
-    // Message de bienvenue
-    alert(`Bienvenue ${firstName} ! Votre numéro étudiant est : ${studentNumber}\n\nVous allez maintenant choisir votre année de formation.`);
+        // Stocker les informations de l'utilisateur après l'inscription
+        localStorage.setItem("currentUser", JSON.stringify(studentData));
 
-    // Rediriger vers la page de choix d'année
-    window.location.href = 'choix-annee.html';
+        alert("Inscription réussie ! Vous êtes maintenant connecté.");
+        window.location.href = "etudiant.html"; // Redirection vers la page personnelle
+
+    } catch (error) {
+        console.error("Erreur API:", error);
+        alert("Erreur lors de l'inscription.");
+    }
 }
 
-// Fonction de sélection d'année
-function handleYearSelection(event) {
+// Ajouter l'événement d'inscription
+document.addEventListener("DOMContentLoaded", function () {
+    const formulaireInscription = document.getElementById("registrationForm");
+    if (formulaireInscription) {
+        formulaireInscription.addEventListener("submit", registerStudent);
+    }
+});
+
+// Fonction de connexion
+async function gererConnexion(event) {
     event.preventDefault();
 
-    // Récupérer les données temporaires
-    const studentData = JSON.parse(localStorage.getItem('newStudentData'));
-    if (!studentData) {
-        alert("Erreur : Aucune donnée d'inscription trouvée.");
-        return;
-    }
+    const numeroEtudiant = document.getElementById("studentNumber").value;
 
-    // Récupérer l'année de formation
-    const studyYear = document.getElementById('studyYear').value;
-    const options = document.getElementById('options').value;
-
-    // Mettre à jour l'étudiant
-    studentData.year = studyYear;
-    studentData.options = options;
-    studentData.registrationStep = 2;
-    studentData.isCompleted = true;
-
-    // Mettre à jour dans la liste des étudiants
-    const registeredStudents = JSON.parse(localStorage.getItem('registeredStudents') || '[]');
-    const studentIndex = registeredStudents.findIndex(s => s.number === studentData.number);
-
-    if (studentIndex !== -1) {
-        registeredStudents[studentIndex] = studentData;
-        localStorage.setItem('registeredStudents', JSON.stringify(registeredStudents));
-    }
-
-    // Supprimer les données temporaires
-    localStorage.removeItem('newStudentData');
-
-    alert(`Votre profil a été mis à jour. Vous pouvez maintenant vous connecter.`);
-    window.location.href = 'accueil.html';
-}
-
-// Générer un numéro étudiant unique
-function generateStudentNumber() {
-    const currentYear = new Date().getFullYear().toString().slice(-2);
-    const randomPart = Math.floor(10000 + Math.random() * 90000);
-    return currentYear + randomPart.toString();
-}
-
-// Afficher les informations de l'étudiant connecté
-
-function displayStudentInfo() {
-    const currentStudent = JSON.parse(localStorage.getItem("currentStudent"));
-    if (currentStudent) {
-        const studentInfoContainer = document.getElementById("studentInfo");
-
-        if (studentInfoContainer) {
-            studentInfoContainer.style.display = "block";
-
-            document.getElementById("infoNumber").textContent = currentStudent.number || "Non disponible";
-            document.getElementById("infoName").textContent = `${currentStudent.firstName} ${currentStudent.lastName}`;
-            document.getElementById("infoEmail").textContent = currentStudent.email;
-            document.getElementById("infoYear").textContent = currentStudent.year || "Non renseigné";
-            document.getElementById("infoOptions").textContent = currentStudent.options || "Non renseigné";
+    try {
+        // Récupérer tous les étudiants
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error("Erreur lors de la récupération des étudiants");
         }
+
+        const students = await response.json();
+        const utilisateur = students.find(u => u.numero.toString() === numeroEtudiant);
+
+        if (utilisateur) {
+            // Récupérer les détails de l'utilisateur
+            const userDetailsResponse = await fetch(`${apiUrl}/${utilisateur.id}`);
+            if (!userDetailsResponse.ok) {
+                throw new Error("Erreur lors de la récupération des détails de l'étudiant");
+            }
+
+            const userDetails = await userDetailsResponse.json();
+
+            // Stocker les informations dans localStorage
+            localStorage.setItem("currentUser", JSON.stringify(userDetails));
+
+            alert("Connexion réussie !");
+            window.location.href = "etudiant.html";
+
+        } else {
+            alert("Numéro étudiant incorrect !");
+        }
+    } catch (error) {
+        console.error("Erreur API:", error);
+        alert("Erreur lors de la connexion.");
     }
 }
 
-// Vérifier si l'utilisateur est déjà connecté au chargement de la page
-document.addEventListener("DOMContentLoaded", function() {
-    const currentStudent = localStorage.getItem("currentStudent");
-    if (currentStudent) {
-        const loginForm = document.getElementById("loginForm");
-        if (loginForm) {
-            loginForm.style.display = "none";
+// Attacher l'événement de connexion si sur la bonne page
+document.addEventListener("DOMContentLoaded", function () {
+    const formulaireConnexion = document.getElementById("loginForm");
+    if (formulaireConnexion) {
+        formulaireConnexion.addEventListener("submit", gererConnexion);
+    }
+});
+
+// Vérifier si un utilisateur est déjà connecté, mais uniquement sur `etudiant.html`
+document.addEventListener("DOMContentLoaded", function () {
+    if (window.location.pathname.includes("etudiant.html")) {
+        const currentUser = localStorage.getItem("currentUser");
+        if (!currentUser) {
+            window.location.href = "index.html"; // Rediriger vers la connexion si pas connecté
         }
-        displayStudentInfo();
     }
 });
