@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gérer les Unités d'Enseignement</title>
+    <style>
+        form {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+<h1>Gérer les Unités d'Enseignement (UE)</h1>
+<form id="createUEForm">
+    <label for="ueName">Nom de l'UE:</label>
+    <input type="text" id="ueName" placeholder="Nom de l'UE" required>
+
+    <label for="ueType">Type de l'UE:</label>
+    <select id="ueType" required>
+        <option value="obligatoire">Obligatoire</option>
+        <option value="optionnelle">Optionnelle</option>
+    </select>
+
+    <label for="tdSize">Taille du groupe de TD:</label>
+    <input type="number" id="tdSize" placeholder="Taille du groupe de TD" required>
+
+    <label for="tpSize">Taille du groupe de TP:</label>
+    <input type="number" id="tpSize" placeholder="Taille du groupe de TP" required>
+
+    <button type="submit">Créer l'UE</button>
+</form>
+
+<script>
+    document.getElementById("createUEForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        alert("L'UE a été créée avec succès !");
+    });
+</script>
+</body>
+</html>

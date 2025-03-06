@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affecter des étudiants</title>
+    <style>
+        form {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+<h1>Affecter des étudiants aux groupes de TD/TP</h1>
+<form id="assignStudentsForm">
+    <label for="group">Sélectionner un groupe de TD/TP:</label>
+    <select id="group" required>
+        <option value="group1">Groupe 1</option>
+        <option value="group2">Groupe 2</option>
+        <option value="group3">Groupe 3</option>
+    </select>
+
+    <label for="students">Sélectionner les étudiants:</label>
+    <select id="students" multiple required>
+        <option value="etudiant1">Étudiant 1</option>
+        <option value="etudiant2">Étudiant 2</option>
+        <option value="etudiant3">Étudiant 3</option>
+    </select>
+
+    <button type="submit">Affecter les étudiants</button>
+</form>
+
+<script>
+    document.getElementById("assignStudentsForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        alert("Les étudiants ont été affectés au groupe avec succès !");
+    });
+</script>
+</body>
+</html>
