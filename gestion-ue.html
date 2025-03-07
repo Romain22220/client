@@ -13,7 +13,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        input, button {
+        input, select, button {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -54,7 +54,26 @@
 <script>
     document.getElementById("createUEForm").addEventListener("submit", function(event) {
         event.preventDefault();
-        alert("L'UE a été créée avec succès !");
+
+        // Récupérer les valeurs du formulaire
+        const ue = {
+            name: document.getElementById("ueName").value,
+            type: document.getElementById("ueType").value,
+            tdSize: document.getElementById("tdSize").value,
+            tpSize: document.getElementById("tpSize").value
+        };
+
+        // Récupérer les UE existantes depuis le localStorage
+        let ues = JSON.parse(localStorage.getItem("ues")) || [];
+
+        // Ajouter la nouvelle UE
+        ues.push(ue);
+
+        // Enregistrer les UE dans le localStorage
+        localStorage.setItem("ues", JSON.stringify(ues));
+
+        // Rediriger vers la page de la liste des UE
+        window.location.href = "listeUE.html";
     });
 </script>
 </body>

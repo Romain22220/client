@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Unités d'Enseignement</title>
+    <style>
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1abc9c;
+        }
+    </style>
+</head>
+<body>
+
+<h1 style="text-align: center;">Liste des Unités d'Enseignement (UE)</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Nom de l'UE</th>
+        <th>Type</th>
+        <th>Taille du groupe de TD</th>
+        <th>Taille du groupe de TP</th>
+    </tr>
+    </thead>
+    <tbody id="uesTableBody">
+    <!-- Les UE seront insérées ici -->
+    </tbody>
+</table>
+
+<button onclick="window.location.href = 'createUE.html';" style="margin: 20px; display: block; margin-left: auto; margin-right: auto;">Retour à la création d'UE</button>
+
+<script>
+    window.onload = function() {
+        // Récupérer les UE enregistrées dans le localStorage
+        let ues = JSON.parse(localStorage.getItem("ues")) || [];
+
+        const tableBody = document.getElementById("uesTableBody");
+
+        // Si aucune UE n'est enregistrée
+        if (ues.length === 0) {
+            tableBody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Aucune UE enregistrée</td></tr>";
+        } else {
+            // Remplir le tableau avec les UE
+            ues.forEach(ue => {
+                const row = `<tr>
+                    <td>${ue.name}</td>
+                    <td>${ue.type}</td>
+                    <td>${ue.tdSize}</td>
+                    <td>${ue.tpSize}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -52,7 +52,26 @@
 <script>
     document.getElementById("createFormationForm").addEventListener("submit", function(event) {
         event.preventDefault();
-        alert("L'année de formation a été créée avec succès !");
+
+        // Récupération des valeurs du formulaire
+        const formation = {
+            formationName: document.getElementById("formationName").value,
+            managerEmail: document.getElementById("managerEmail").value,
+            managerName: document.getElementById("managerName").value,
+            managerPrenom: document.getElementById("managerPrenom").value
+        };
+
+        // Récupérer les formations existantes depuis localStorage
+        let formations = JSON.parse(localStorage.getItem("formations")) || [];
+
+        // Ajouter la nouvelle formation
+        formations.push(formation);
+
+        // Enregistrer les formations dans localStorage
+        localStorage.setItem("formations", JSON.stringify(formations));
+
+        // Rediriger vers la page de la liste des formations
+        window.location.href = "listeFormations.html";
     });
 </script>
 </body>

@@ -111,7 +111,7 @@
         <input type="text" id="managerPrenom" required>
     </div>
 
-    <button type="submit">S'inscrire</button>
+    <button id="valider" type="submit">S'inscrire</button>
     <br>
     <br>
     <br>
@@ -150,6 +150,11 @@
         } catch (error) {
             alert(error.message);
         }
+    });
+
+    // Fonction de retour en arrière
+    document.getElementById("valider").addEventListener("click", function () {
+        window.location.href = "index.html";
     });
 
     // Fonction de retour en arrière

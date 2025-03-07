@@ -5,34 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Déplacer un étudiant</title>
     <style>
-        form {
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Styles pour le formulaire */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
+
+        form {
+            max-width: 600px;
+            margin: 20px;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
         select, button {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 6px;
             border: 1px solid #ddd;
+            font-size: 16px;
+            color: #333;
+            background-color: #f9f9f9;
+            transition: all 0.3s ease;
         }
+
+        select:focus, button:hover {
+            background-color: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+
         button {
             background-color: #3498db;
             color: white;
             cursor: pointer;
         }
-        button:hover {
-            background-color: #2980b9;
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 16px;
+            color: green;
         }
     </style>
 </head>
 <body>
-<h1>Déplacer un étudiant</h1>
 <form id="moveStudentForm">
+    <h1>Déplacer un étudiant</h1>
     <label for="student">Sélectionner un étudiant:</label>
     <select id="student" required>
         <option value="etudiant1">Étudiant 1</option>
@@ -48,13 +86,34 @@
     </select>
 
     <button type="submit">Déplacer l'étudiant</button>
+
+    <button onclick="window.location.href = 'navbar-responsable.html';" style="margin: 20px; display: block; margin-left: auto; margin-right: auto;">Retour à la création</button>
+
+
+
+    <!-- Message de confirmation -->
+    <div id="successMessage" class="message" style="display: none;">L'étudiant a été déplacé avec succès !</div>
 </form>
 
 <script>
     document.getElementById("moveStudentForm").addEventListener("submit", function(event) {
         event.preventDefault();
-        alert("L'étudiant a été déplacé avec succès !");
+
+        // Récupérer les informations sélectionnées
+        const student = document.getElementById("student").value;
+        const group = document.getElementById("group").value;
+
+        // Affichage du message de confirmation
+        const successMessage = document.getElementById("successMessage");
+        successMessage.style.display = "block";
+
+        // Simulation de l'alerte, vous pouvez ajouter ici une logique pour gérer le déplacement dans une base de données ou autre système
+        setTimeout(function() {
+            successMessage.style.display = "none"; // Cacher après un certain temps
+        }, 3000); // Disparaît après 3 secondes
     });
+
+
 </script>
 </body>
 </html>

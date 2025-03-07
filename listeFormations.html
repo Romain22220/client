@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des formations</title>
+    <style>
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1abc9c;
+        }
+    </style>
+</head>
+<body>
+
+<h1 style="text-align: center;">Liste des Formations</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Nom de l'année de formation</th>
+        <th>Email du responsable</th>
+        <th>Nom du responsable</th>
+        <th>Prénom du responsable</th>
+    </tr>
+    </thead>
+    <tbody id="formationsTableBody">
+    <!-- Les formations seront insérées ici -->
+    </tbody>
+</table>
+
+<button onclick="window.location.href = 'navbar-responsable.html';" style="margin: 20px; display: block; margin-left: auto; margin-right: auto;">Retour à la création</button>
+
+<script>
+    window.onload = function() {
+        // Récupérer les formations enregistrées dans le localStorage
+        let formations = JSON.parse(localStorage.getItem("formations")) || [];
+
+        const tableBody = document.getElementById("formationsTableBody");
+
+        // Si aucune formation n'est enregistrée
+        if (formations.length === 0) {
+            tableBody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Aucune formation enregistrée</td></tr>";
+        } else {
+            // Remplir le tableau avec les formations
+            formations.forEach(formation => {
+                const row = `<tr>
+                    <td>${formation.formationName}</td>
+                    <td>${formation.managerEmail}</td>
+                    <td>${formation.managerName}</td>
+                    <td>${formation.managerPrenom}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+    }
+</script>
+
+</body>
+</html>
